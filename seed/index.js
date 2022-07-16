@@ -5,8 +5,12 @@ var Product = require('../models/Product');
 var Variant = require('../models/Variant');
 var mongoose = require('mongoose');
 const mongoConfig = require('../configs/mongo-config')
-mongoose.connect(mongoConfig, { useNewUrlParser: true, useCreateIndex: true, });
+// console.log(`mongoConfig = ${JSON.stringify(mongoConfig)}`)
+console.log(`mongoConfig = ${mongoConfig}`)
 
+mongoose.connect(mongoConfig, { useNewUrlParser: true, useCreateIndex: true},() => {
+    console.log('connection established')
+});
 
 var categories =
   [
