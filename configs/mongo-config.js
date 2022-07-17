@@ -5,4 +5,5 @@
 //     uri: "mongodb://192.168.157.207:27017"
 // }
 
-module.exports='mongodb://192.168.157.207:27017'
+// module.exports='mongodb://192.168.157.207:27017'
+module.exports='mongodb://localhost:27017'

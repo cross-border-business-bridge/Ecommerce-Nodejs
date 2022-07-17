@@ -8,8 +8,9 @@ const mongoConfig = require('../configs/mongo-config')
 // console.log(`mongoConfig = ${JSON.stringify(mongoConfig)}`)
 console.log(`mongoConfig = ${mongoConfig}`)
 
-mongoose.connect(mongoConfig, { useNewUrlParser: true, useCreateIndex: true},() => {
-    console.log('connection established')
+mongoose.connect(mongoConfig, { useNewUrlParser: true, useCreateIndex: true},,function(error){
+    if(error) throw error
+    console.log(`connect mongodb success`);
 });
 
 var categories =
