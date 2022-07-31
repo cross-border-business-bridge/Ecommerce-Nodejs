@@ -39,6 +39,7 @@ router.post('/signin', function (req, res, next) {
     password: password,
     email: email
   });
+  // email is primary key
   User.getUserByEmail(email, function (error, user) {
     if (error) return next(err)
     if (user) {
@@ -47,6 +48,7 @@ router.post('/signin', function (req, res, next) {
       })
       return next(err)
     }
+    // store user
     User.createUser(newUser, function (err, user) {
       if (err) return next(err);
       res.json({ message: 'user created' })
@@ -67,9 +69,11 @@ router.post('/login', function (req, res, next) {
       let err = new TypedError('login error', 403, 'invalid_field', { message: "Incorrect email or password" })
       return next(err)
     }
+
     User.comparePassword(password, user.password, function (err, isMatch) {
       if (err) return next(err)
       if (isMatch) {
+        // jwt.sign, then jwt.verify to check its valid.
         let token = jwt.sign(
           { email: email },
           config.secret,

@@ -23,9 +23,15 @@ var userSchema = mongoose.Schema({
 
 var User = module.exports = mongoose.model('User', userSchema);
 
+/**
+ * password stored as cal hash
+ * @param newUser
+ * @param callback
+ */
 module.exports.createUser = function (newUser, callback) {
     bcrypt.genSalt(10, function (err, salt) {
         bcrypt.hash(newUser.password, salt, function (err, hash) {
+            console.log(`salt = ${salt}`)
             newUser.password = hash;
             newUser.save(callback);
         });

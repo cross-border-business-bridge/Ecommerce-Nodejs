@@ -8,7 +8,7 @@ const mongoConfig = require('../configs/mongo-config')
 // console.log(`mongoConfig = ${JSON.stringify(mongoConfig)}`)
 console.log(`mongoConfig = ${mongoConfig}`)
 
-mongoose.connect(mongoConfig, { useNewUrlParser: true, useCreateIndex: true},,function(error){
+mongoose.connect(mongoConfig, { useNewUrlParser: true, useCreateIndex: true},function(error){
     if(error) throw error
     console.log(`connect mongodb success`);
 });
@@ -51,7 +51,6 @@ var departments =
     new Department({
       departmentName: 'Women',
       categories: 'Basics,Blazer'
-
     }),
     new Department({
       departmentName: 'Men',

@@ -1,3 +1,4 @@
+
 # Full stack ecommerce online store application
 
 
@@ -18,3 +19,8 @@
    
 </p>
 </details>
+
+```aidl
+fintech_test@126.com
+ABcd1234
+```

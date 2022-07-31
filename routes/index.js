@@ -162,10 +162,11 @@ router.get('/filter', function (req, res, next) {
 })
 
 //GET /checkout
+// ensureAuthenticated request chain
 router.get('/checkout/:cartId', ensureAuthenticated, function (req, res, next) {
   const cartId = req.params.cartId
-  const frontURL = 'https://zack-ecommerce-reactjs.herokuapp.com'
-  // const frontURL = 'http://localhost:3000'
+  // const frontURL = 'https://zack-ecommerce-reactjs.herokuapp.com'
+  const frontURL = 'http://localhost:3000'
 
   Cart.getCartById(cartId, function (err, c) {
     if (err) return next(err)
@@ -251,6 +252,10 @@ function generateFilterResultArray(products, targetProp) {
 function categorizeQueryString(queryObj) {
   let query = {}
   let order = {}
+
+  // TODO GET /products?range=0-39&department=Men 404
+  console.log(JSON.stringify(queryObj))
+
   //extract query, order, filter value
   for (const i in queryObj) {
     if (queryObj[i]) {

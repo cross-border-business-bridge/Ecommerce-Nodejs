@@ -27,3 +27,5 @@ module.exports.getAllDepartments = function (query, callback) {
 module.exports.getDepartmentById = function (id, callback) {
     Department.findById(id, callback);
 }
+
+// TODO GET /products?range=0-39&department=Men 404
