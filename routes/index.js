@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const ensureAuthenticated = require('../modules/ensureAuthenticated')
 const Product = require('../models/Product')
+const Comment = require('../models/Comment')
 const Variant = require('../models/Variant')
 const Department = require('../models/Department')
 const Category = require('../models/Category')
@@ -38,6 +39,84 @@ router.get('/products/:id', function (req, res, next) {
     }
   });
 });
+
+//GET /comments/:id
+router.get('/comments/:id', async function (req, res, next) {
+  let productId = req.params.id;
+  console.log(`productId = ${productId}`)
+
+  if(1 !== 2) {
+    try {
+      const comments = await Comment.getCommentByProductId(productId)
+      res.json(comments)
+    } catch (e) {
+      e.status = 404
+      return next(e)
+    }
+  } else {
+    // mock
+    res.json({
+      comments: [
+        {
+          id: '1',
+          name: 'mock user',
+          comment: 'hard code',
+          time: ''
+        }
+      ]
+    })
+  }
+});
+
+// POST /comments/:id
+// router.post('/comments/:id', function (req, res, next) {
+//   let productId = req.params.id;
+//   console.log(`productId = ${productId}`)
+//
+//   // check productId
+//   Product.getProductByID(productId, function (e, p){
+//     if (e) {
+//       e.status = 404; return next(e);
+//     }
+//     else {
+//       // get userId
+//       const { content} = req.body
+//
+//       Comment.postComment({productId, content}, function (e, item) {
+//         if (e) {
+//           e.status = 404; return next(e);
+//         }
+//         else {
+//           res.json(item)
+//         }
+//       })
+//     }
+//   })
+//
+//
+// });
+
+router.post('/comments/:id', async function (req, res, next) {
+  let productId = req.params.id;
+  console.log(`productId = ${productId}`)
+
+  try {
+    // 1. check productId
+    const product = await Product.getProductByID(productId)
+
+    // 2. get userId
+    const { content} = req.body
+
+    // 3. save comment
+    const item  = await Comment.postComment({productId, content})
+    res.json(item)
+  } catch (e) {
+    e.status = 500
+    return next(e)
+  }
+
+});
+
 
 //GET /variants
 router.get('/variants', function (req, res, next) {

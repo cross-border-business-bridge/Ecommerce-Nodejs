@@ -69,7 +69,25 @@ module.exports.filterProductByTitle = function (title, callback) {
   Product.find(query, callback);
 }
 
-module.exports.getProductByID = function (id, callback) {
-  Product.findById(id, callback);
-}
+// module.exports.getProductByID = function (id, callback) {
+//   Product.findById(id, callback);
+// }
 
+module.exports.getProductByID = async (id, callback) => {
+  try {
+    const p = await Product.findById(id)
+    if(typeof callback === 'function') {
+      callback(null, p)
+    } else {
+      return p
+    }
+  } catch (e) {
+    if(typeof callback === 'function') {
+      callback(e)
+    } else {
+      return new Promise((resolve, reject) => {
+        reject(e)
+      })
+    }
+  }
+}
